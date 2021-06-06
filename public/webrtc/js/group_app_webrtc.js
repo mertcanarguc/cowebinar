@@ -1,20 +1,14 @@
 
-
-let voboWebRtcLoadFunction = () => {
-
-
+window.voboWebRtcLoadFunction = (uV, cV) => {
     window.today = new Date();
-
-
-    // VoboWebRtc Class Created
     var VoboWebRtc = new VoboWebRTC({
         localVideoEl: 'videoContainer',
         enableDataChannels: window.settings.enableDataChannels,
         autoRequestMedia: window.settings.autoRequestMedia,
         nick: window.settings,
-        debug: true,
+        debug: window.settings.debug,
         autoAdjustMic: true,
-        media: { audio: window.settings.media.audio, video:  window.settings.media.video  },
+        media: { audio: window.settings.media.audio, video: window.settings.media.video },
         server: {
             // signal: "localhost:3001",
             signal: "https://soruvecozum.com",
@@ -44,234 +38,89 @@ let voboWebRtcLoadFunction = () => {
 
     window.voboWebRtc = VoboWebRtc;
 
-// VoboWebRtc.mute();
-// VoboWebRtc.unmute();
-// VoboWebRtc.pause();
-// VoboWebRtc.pauseVideo();
-
-// VoboWebRtc.resumeVideo();
-// VoboWebRtc.leaveRoom();
-// VoboWebRtc.disconnect();
-// VoboWebRtc.setVolumeForAll(volume 0 - 1);
-// VoboWebRtc.stopLocalVideo();
-// VoboWebRtc.getPeers(sessionId, type);
-// VoboWebRtc.getPeersAll();
-// VoboWebRtc.testReadiness();
-// VoboWebRtc.startLocalVideo();
-// VoboWebRtc.createRoom(name,callback);
+    // VoboWebRtc.mute();
+    // VoboWebRtc.unmute();
+    // VoboWebRtc.pause();
+    // VoboWebRtc.pauseVideo();
+    // VoboWebRtc.resumeVideo();
+    // VoboWebRtc.leaveRoom();
+    // VoboWebRtc.disconnect();
+    // VoboWebRtc.setVolumeForAll(volume 0 - 1);
+    // VoboWebRtc.stopLocalVideo();
+    // VoboWebRtc.getPeers(sessionId, type);
+    // VoboWebRtc.getPeersAll();
+    // VoboWebRtc.testReadiness();
+    // VoboWebRtc.startLocalVideo();
+    // VoboWebRtc.createRoom(name,callback);
 
     VoboWebRtc.on('connectionReady', function (sessionId) {
 
 
 
-        let checkVal = () => {
+        console.log("VIDEO", DetectRTC.videoInputDevices);
+        console.log("AUDIO INPUT", DetectRTC.audioInputDevices);
+        console.log("AUDIO OUTPUT", DetectRTC.audioOutputDevices);
 
-            if(localStorage.getItem("joinRoom") != null){
-
-                if(localStorage.getItem("joinRoom") === "true"){
-
-                    var getPeers = VoboWebRtc.getPeersAll();
-
-                    $(".viewerCounter").html(getPeers.length);
-
-
-                    if(localStorage.getItem("screenControl") === "passive"){
-
-
-                        if(getPeers.length === 1){
-                            $(".in_coming_screen").addClass("in_coming_videoX1");
-                            $(".in_coming_video").addClass("in_coming_videoX1");
-                        }
-
-                        if(getPeers.length > 1 && getPeers.length < 4){
-
-                            $(".in_coming_screen").removeClass("in_coming_videoX1");
-                            $(".in_coming_video").removeClass("in_coming_videoX1");
-
-                        }
-
-                        if(getPeers.length > 4){
-
-                            $(".in_coming_screen").removeClass("in_coming_videoX1");
-                            $(".in_coming_video").removeClass("in_coming_videoX1");
-
-                            $(".in_coming_screen").addClass("in_coming_videoX2");
-                            $(".in_coming_video").addClass("in_coming_videoX2");
-
-                        }
-
-                    }
-
-                    if(localStorage.getItem("screenControl") === "active"){
-
-                        if(getPeers.length === 1 ){
-
-                            $(".in_coming_screen").addClass("in_coming_videoX1");
-                            $(".in_coming_video").addClass("in_coming_videoX1");
-                        }
-
-                        if(getPeers.length >= 3 && getPeers.length <= 5){
-
-                            $(".in_coming_screen").removeClass("in_coming_videoX1");
-                            $(".in_coming_video").removeClass("in_coming_videoX1");
-                        }
-
-                        if(getPeers.length > 5){
-
-                            $(".in_coming_screen").removeClass("in_coming_videoX1");
-                            $(".in_coming_video").removeClass("in_coming_videoX1");
-
-                            $(".in_coming_screen").addClass("in_coming_videoX2");
-                            $(".in_coming_video").addClass("in_coming_videoX2");
-                        }
-
-
-                    }
-
-                }
-
-                if(localStorage.getItem("joinRoom") === "false"){
-
-                    $(".watcherScreenVideo").hide();
-                    $(".welcomeScreenVideo").show();
-
-                }
-
-                if(localStorage.getItem("joinRoom") === "true"){
-                    if(getPeers.length === 0){
-                        $(".watcherScreenVideo").show();
-                        $(".welcomeScreenVideo").hide();
-                    }
-
-                    if(getPeers.length > 0){
-                        $(".watcherScreenVideo").hide();
-                        $(".welcomeScreenVideo").hide();
-                    }
-
-                }
-
-            }
-
-        };
-
-        console.log("VIDEO",DetectRTC.videoInputDevices);
-        console.log("AUDIO INPUT",DetectRTC.audioInputDevices);
-        console.log("AUDIO OUTPUT",DetectRTC.audioOutputDevices);
-
-        DetectRTC.videoInputDevices.forEach((videoDevice, index)=> {
+        DetectRTC.videoInputDevices.forEach((videoDevice, index) => {
             let isChecked = (index === 0 ? "cameraItemActive" : null);
             $(".cameraSettings").append(
-                '<div class="cameraItem '+isChecked+'" data-id="'+videoDevice.id+'" data-groupId="'+videoDevice.groupId+'">' +
+                '<div class="cameraItem ' + isChecked + '" data-id="' + videoDevice.id + '" data-groupId="' + videoDevice.groupId + '">' +
                 '<img src="webrtc/svg/camera.svg"  alt="">' +
-                '<span>'+videoDevice.label+'</span>' +
+                '<span>' + videoDevice.label + '</span>' +
                 '</div>'
             );
         });
 
 
-        DetectRTC.audioInputDevices.forEach((audioDevice, index)=> {
+        DetectRTC.audioInputDevices.forEach((audioDevice, index) => {
             let isChecked = (index === 0 ? "microphoneItemActive" : null);
             $(".microphoneSettings").append(
-                '<div class="microphoneItem '+isChecked+'" data-id="'+audioDevice.id+'" data-groupId="'+audioDevice.groupId+'">' +
+                '<div class="microphoneItem ' + isChecked + '" data-id="' + audioDevice.id + '" data-groupId="' + audioDevice.groupId + '">' +
                 '<img src="webrtc/svg/microphone.svg"  alt="">' +
-                '<span>'+audioDevice.label+'</span>' +
+                '<span>' + audioDevice.label + '</span>' +
                 '</div>'
             );
         });
 
 
 
-        if(localStorage.getItem("cameraControl") == null || localStorage.getItem("cameraControl") == "passive"){
+        if (localStorage.getItem("cameraControl") == null || localStorage.getItem("cameraControl") == "passive") {
             $(".cameraControl > .status").removeClass("bgGreen");
             VoboWebRtc.pauseVideo();
-        }else{
+        } else {
             $(".cameraControl > .status").addClass("bgGreen");
             VoboWebRtc.resumeVideo();
         }
 
-        if(localStorage.getItem("microphoneControl") == null || localStorage.getItem("microphoneControl") == "passive"){
+        if (localStorage.getItem("microphoneControl") == null || localStorage.getItem("microphoneControl") == "passive") {
             $(".microphoneControl > .status").removeClass("bgGreen");
             VoboWebRtc.mute();
-        }else{
+        } else {
             $(".microphoneControl > .status").addClass("bgGreen");
             VoboWebRtc.unmute();
         }
 
 
-        if(localStorage.getItem("chatControl") == null || localStorage.getItem("chatControl") == "passive"){
+        if (localStorage.getItem("chatControl") == null || localStorage.getItem("chatControl") == "passive") {
             $(".chatControl > .status").removeClass("bgGreen");
-        }else{
+        } else {
             $(".chatControl > .status").addClass("bgGreen");
         }
 
 
 
-        VoboWebRtc.on('connectivityError', function (peer) {
-            console.log(peer);
-        });
-
-
-        VoboWebRtc.on('iceFailed', function (peer) {
-            console.log(peer);
-        });
-
-        VoboWebRtc.on('localStream', function (stream) {
-            //var videoTracks = stream.getVideoTracks();
-            //var  audioTracks = stream.getAudioTracks();
-
-            //audioContext = new webkitAudioContext();
-            //var audioContext = new AudioContext();
-            //var analyser = audioContext.createAnalyser();
-            //var microphone = audioContext.createMediaStreamSource(stream);
-            //var javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
-
-            //analyser.smoothingTimeConstant = 0.3;
-            //analyser.fftSize = 1024;
-
-            //microphone.connect(analyser);
-            //analyser.connect(javascriptNode);
-            //javascriptNode.connect(audioContext.destination);
-            //var  canvasContext = document.getElementById("test");
-            //canvasContext = canvasContext.getContext("2d");
-
-            //javascriptNode.onaudioprocess = function() {
-                //console.log('doing.... bla bla');
-                //var array =  new Uint8Array(analyser.frequencyBinCount);
-                //analyser.getByteFrequencyData(array);
-                //var values = 0;
-
-                //var length = array.length;
-                //for (var i = 0; i < length; i++) {
-                //   values += array[i];
-                //}
-
-                //var average = values / length;
-                //canvasContext.clearRect(0, 0, 300, 130);
-                //canvasContext.fillStyle = '#00ff00';
-                //canvasContext.fillRect(0,130-average,300,130);
-                //canvasContext.clearRect(0, 0, 300, 130);
-                //canvasContext.fillStyle = '#00ff00';
-                //canvasContext.fillRect(average,0,50,130);
-
-            // };
-
-        });
-
-
-
-
-        // Görüşmeye Hazır Dinleyicisi
+        // GÃ¶rÃ¼ÅŸmeye HazÄ±r Dinleyicisi
         VoboWebRtc.on('readyToCall', function () {
 
 
-            $(document).on("click",".buttonLiveOn",function () {
+            $(document).on("click", ".buttonLiveOn", function () {
 
                 swal({
                     title: "UYARI",
-                    text: "YAYINA GEÇMEYİ ONAYLIYOR MUSUNUZ?",
+                    text: "YAYINA GEÃ‡MEYÄ° ONAYLIYOR MUSUNUZ?",
                     icon: "info",
                     buttons: {
-                        cancel: "Hayır",
+                        cancel: "HayÄ±r",
                         confirm: "Evet"
                     }
                 })
@@ -280,19 +129,13 @@ let voboWebRtcLoadFunction = () => {
 
                             $('.timer').countimer("start");
 
-                            VoboWebRtc.joinRoom(window.settings.roomId,()=>{
-
-                                VoboWebRtc.sendDirectlyToAll(window.settings.roomId,"chat", {});
-                                $(".welcomeScreenVideo").hide();
-                                $(".watcherScreenVideo").show();
-                                $(".screenControl").show();
-                                localStorage.setItem("joinRoom",true);
+                            VoboWebRtc.joinRoom(window.settings.roomId, () => {
+                                VoboWebRtc.sendDirectlyToAll(window.settings.roomId, "chat", {});
                             });
 
                             $(".streamStatusButton").removeClass("buttonLiveOn");
                             $(".streamStatusButton").addClass("buttonLiveOff");
-                            $(".streamStatusButton").html("GÖRÜŞMEDEN AYRIL");
-
+                            $(".streamStatusButton").html("YAYINI KAPAT");
 
 
                         }
@@ -306,56 +149,131 @@ let voboWebRtcLoadFunction = () => {
         VoboWebRtc.on('localMediaError', function (err) {
 
             // Error Local Media Elements
-            console.log(err);
+            // console.log(err);
 
         });
 
-
-
-        setInterval(checkVal,1500);
 
         // Video Ekleme
         VoboWebRtc.on('videoAdded', function (video, peer) {
 
             if (peer && peer.pc) {
 
-                if(peer.nick.userId !== window.settings.userId){
+                $(".noWatcher").hide();
 
-                    if(peer.type === "screen"){
+                $(".audienceListDiv").append(
+                    '<div class="audienceItem" id="list_' + peer.id + '" data-user="' + peer.nick.userId + '" data-id="' + peer.id + '">' +
+                    '<div class="avatarAudience" data-id="' + peer.id + '" style="background: ' + peer.nick.user.color + ';" >  <img src="webrtc/svg/vobolive.svg" class="animate__fadeInLeft animate__animated userVideoFull" style="display: none;" width="100px" alt="">   </div>' +
+                    '<div class="userInformation">' +
+                    '<div class="fullName">' + peer.nick.user.fullName + '</div>' +
+                    '<div class="controls">' +
+                    '<div class="camera remoteWatcherCamera" data-id="' + peer.id + '" data-user="' + peer.nick.userId + '"><img src="webrtc/svg/camera.svg" height="16px" alt=""> </div>' +
+                    '<div class="microphone remoteWatcherMicrophone" data-id="' + peer.id + '" data-user="' + peer.nick.userId + '"><img src="webrtc/svg/microphone.svg" height="20px" alt="">' +
+                    '</div>' +
+                    '<div data-player="' + peer.id + '" class="guestVideoPlayer"></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
+                );
 
-                        $(".videoContainer").append("<div onclick='$(this).toggleFullScreen()' data-peer-screen='"+peer.id+"' class='in_coming_screen animate__fadeIn animate__animated'></div>");
-
-                        $("[data-peer-screen="+peer.id+"]").append('<div class="users" style="background: linear-gradient(0deg, rgba('+hexToRgb(peer.nick.user.color).r+', '+hexToRgb(peer.nick.user.color).g+', '+hexToRgb(peer.nick.user.color).b+', 0.75) 37%, rgba(0, 212, 255, 0) 100%);"> <div class="avatarUser animate__animated animate__bounceIn"><img src="avatars/'+peer.nick.user.avatar+'.svg" height="53px" class="avatarView " alt="" style="background: #'+peer.nick.user.color+'"> </div> <div class="information "> <div class="fullName fullNameViewZz">'+peer.nick.user.fullName+'</div> <div class="eMail eMailViewZz">'+peer.nick.user.eMail+'</div> </div> </div>');
-
-                        $("[data-peer-screen="+peer.id+"]").append(video);
-
-                    }else{
-
-                        $(".videoContainer").append("<div onclick='$(this).toggleFullScreen()' data-peer-video='"+peer.id+"' class='in_coming_video animate__fadeIn animate__animated'></div>");
-
-                        $("[data-peer-video="+peer.id+"]").append('<div class="users" style="background: linear-gradient(0deg, rgba('+hexToRgb(peer.nick.user.color).r+', '+hexToRgb(peer.nick.user.color).g+', '+hexToRgb(peer.nick.user.color).b+', 0.75) 37%, rgba(0, 212, 255, 0) 100%);"> <div class="avatarUser animate__animated animate__bounceIn" ><img src="avatars/'+peer.nick.user.avatar+'.svg" height="53px" class="avatarView " alt="" style="background: #'+peer.nick.user.color+'"> </div> <div class="information "> <div class="fullName fullNameViewZz">'+peer.nick.user.fullName+'</div> <div class="eMail eMailViewZz">'+peer.nick.user.eMail+'</div> </div> </div>');
-
-                        $("[data-peer-video="+peer.id+"]").append($(video).attr("playsinline",true).css("transform","rotateY(180deg)"));
-
-                    }
-
-                }
+                $(".avatarAudience[data-id=" + peer.id + "]").append($(video).attr("playsinline", true).css("transform", "rotateY(180deg)"));
 
                 // Add Item
-                localStorage.setItem(peer.id+"_camera","passive");
-                localStorage.setItem(peer.id+"_microphone","passive");
+                localStorage.setItem(peer.id + "_camera", "passive");
+                localStorage.setItem(peer.id + "_microphone", "passive");
 
             }
 
         });
 
 
+        setInterval(() => {
+
+            $(".viewerCounter").html(VoboWebRtc.getPeersAll().length);
+
+            if (VoboWebRtc.getPeersAll().length === 0) {
+                $(".audienceListDiv").html(" <div class='noWatcher' > KATILIMCI BULUNAMADI </div> ");
+            } else {
+                $(".noWatcher").hide();
+                VoboWebRtc.getPeersAll().forEach((peer) => {
+
+                    if ($("#list_" + peer.id).length === 0) {
+
+                        $(".audienceListDiv").append(
+                            '<div class="audienceItem" id="list_' + peer.id + '" data-user="' + peer.nick.userId + '" data-id="' + peer.id + '">' +
+                            '<div class="avatarAudience" data-id="' + peer.id + '" style="background: ' + peer.nick.user.color + ';" > <img height="80px" src="avatars/' + peer.nick.user.avatar + '.svg"> </div>' +
+                            '<div class="userInformation">' +
+                            '<div class="fullName">' + peer.nick.user.fullName + '</div>' +
+                            '<div class="controls">' +
+                            '<div class="camera remoteWatcherCamera" style="background: red;" data-id="' + peer.id + '" data-user="' + peer.nick.userId + '"><img src="webrtc/svg/camera.svg" height="16px" alt=""> </div>' +
+                            '<div class="microphone remoteWatcherMicrophone" style="background: red;" data-id="' + peer.id + '" data-user="' + peer.nick.userId + '"><img src="webrtc/svg/microphone.svg" height="20px" alt="">' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+
+                    }
+
+
+
+                });
+            }
+
+
+
+        }, 1000);
+
+        $('textarea').bind("enterKey", function (e) {
+
+            if ($(this).val().length > 0) {
+
+                let message = $("textarea").val().replace("\n", "").replace(/(<([^>]+)>)/ig, "");
+
+                let payload = {
+                    settings: {
+                        roomId: window.settings.roomId,
+                        userId: window.settings.userId
+                    },
+                    user: {
+                        fullName: window.settings.user.fullName,
+                        eMail: window.settings.user.eMail,
+                        color: window.settings.user.color,
+                        avatar: window.settings.user.avatar
+                    },
+                    content: Linkify(message),
+                    time: new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds()
+                };
+
+                VoboWebRtc.sendDirectlyToAll(window.settings.roomId, "chat", payload);
+
+                $(".chatHisory").append(
+                    '<div class="chatItem">' +
+                    '<span class="chatLeftIcon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 13" width="8" height="13"><path opacity=".13" fill="#0000000" d="M1.533 3.568L8 12.193V1H2.812C1.042 1 .474 2.156 1.533 3.568z"></path><path fill="currentColor" d="M1.533 2.568L8 11.193V0H2.812C1.042 0 .474 1.156 1.533 2.568z"></path></svg></span>' +
+                    '<p class="chatMessage">' + payload.content + '</p>' +
+                    '<div class="chatOwnerAndInfo">' + payload.user.fullName + ' | ' + payload.time + '</div>' +
+                    '</div>'
+                );
+
+                $(this).val("");
+
+            }
+
+        });
 
 
         VoboWebRtc.on('channelMessage', function (peer, label, data) {
 
 
-            if(label === window.settings.roomId && data.type === "chat" ){
+            if (label === window.settings.roomId && data.type === "chat") {
+
+                $(".chatHisory").append(
+                    '<div class="chatItem">' +
+                    '<span class="chatLeftIcon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 13" width="8" height="13"><path opacity=".13" fill="#0000000" d="M1.533 3.568L8 12.193V1H2.812C1.042 1 .474 2.156 1.533 3.568z"></path><path fill="currentColor" d="M1.533 2.568L8 11.193V0H2.812C1.042 0 .474 1.156 1.533 2.568z"></path></svg></span>' +
+                    '<p class="chatMessage">' + (data.payload.content) + '</p>' +
+                    '<div class="chatOwnerAndInfo">' + data.payload.user.fullName + ' | ' + data.payload.time + '</div>' +
+                    '</div>'
+                );
 
 
             }
@@ -369,94 +287,84 @@ let voboWebRtcLoadFunction = () => {
             if (peer.pc.iceConnectionState === "closed") {
 
                 $(video).remove();
+                $('#list_' + peer.id).remove();
+                $('#guest_' + VoboWebRtc.getDomId(peer)).remove();
 
-                if(peer.type === "screen"){
-
-                    $('[data-peer-screen=' + peer.id + ']').removeClass("animate__fadeIn animate__animated");
-                    $('[data-peer-screen=' + peer.id + ']').addClass("animate__fadeIn animate__animated").remove();
-
-
-                }else{
-                    $('[data-peer-video=' + peer.id + ']').removeClass("animate__fadeIn animate__animated");
-                    $('[data-peer-video=' + peer.id + ']').addClass("animate__fadeIn animate__animated").remove();
-
-
-                }
 
                 // Remove Item
-                localStorage.removeItem(peer.id+"_camera");
-                localStorage.removeItem(peer.id+"_microphone");
+                localStorage.removeItem(peer.id + "_camera");
+                localStorage.removeItem(peer.id + "_microphone");
 
             }
 
         });
 
 
-        // Kamera Kontrolü
+        // Kamera KontrolÃ¼
         $(".cameraControl").click(function () {
 
-            if(localStorage.getItem("cameraControl") === "active"){
+            if (localStorage.getItem("cameraControl") === "active") {
 
-                localStorage.setItem("cameraControl","passive");
+                localStorage.setItem("cameraControl", "passive");
                 $(".cameraControl > .status").removeClass("bgGreen");
                 VoboWebRtc.pauseVideo();
 
-            }else if(localStorage.getItem("cameraControl") === "passive"){
+            } else if (localStorage.getItem("cameraControl") === "passive") {
 
                 VoboWebRtc.resumeVideo();
                 $(".cameraControl > .status").addClass("bgGreen");
-                localStorage.setItem("cameraControl","active");
+                localStorage.setItem("cameraControl", "active");
 
-            }else{
+            } else {
                 VoboWebRtc.pauseVideo();
                 $(".cameraControl > .status").removeClass("bgGreen");
-                localStorage.setItem("cameraControl","passive");
+                localStorage.setItem("cameraControl", "passive");
             }
 
         });
 
 
-        // Mikrofon Kontrolü
+        // Mikrofon KontrolÃ¼
         $(".microphoneControl").click(function () {
 
-            if(localStorage.getItem("microphoneControl") === "active"){
+            if (localStorage.getItem("microphoneControl") === "active") {
 
-                localStorage.setItem("microphoneControl","passive");
+                localStorage.setItem("microphoneControl", "passive");
                 $(".microphoneControl > .status").removeClass("bgGreen");
                 VoboWebRtc.mute();
 
-            }else if(localStorage.getItem("microphoneControl") === "passive"){
+            } else if (localStorage.getItem("microphoneControl") === "passive") {
 
                 VoboWebRtc.unmute();
                 $(".microphoneControl > .status").addClass("bgGreen");
-                localStorage.setItem("microphoneControl","active");
+                localStorage.setItem("microphoneControl", "active");
 
-            }else{
+            } else {
                 VoboWebRtc.mute();
                 $(".microphoneControl > .status").removeClass("bgGreen");
-                localStorage.setItem("microphoneControl","passive");
+                localStorage.setItem("microphoneControl", "passive");
             }
 
 
         });
 
 
-        // Sohbet Kontrolü
+        // Sohbet KontrolÃ¼
         $(".chatControl").click(function () {
 
-            if(localStorage.getItem("chatControl") === "active"){
+            if (localStorage.getItem("chatControl") === "active") {
 
-                localStorage.setItem("chatControl","passive");
+                localStorage.setItem("chatControl", "passive");
                 $(".chatControl > .status").removeClass("bgGreen");
 
-            }else if(localStorage.getItem("chatControl") === "passive"){
+            } else if (localStorage.getItem("chatControl") === "passive") {
 
-                localStorage.setItem("chatControl","active");
+                localStorage.setItem("chatControl", "active");
                 $(".chatControl > .status").addClass("bgGreen");
 
-            }else{
+            } else {
                 $(".chatControl > .status").removeClass("bgGreen");
-                localStorage.setItem("chatControl","passive");
+                localStorage.setItem("chatControl", "passive");
 
             }
 
@@ -464,7 +372,7 @@ let voboWebRtcLoadFunction = () => {
         });
 
 
-        // Ekran Paylaşım Kontrol Butonu
+        // Ekran PaylaÅŸÄ±m Kontrol Butonu
         $(".screenControl").click(function () {
 
             if (VoboWebRtc.getLocalScreen() !== undefined) {
@@ -475,34 +383,18 @@ let voboWebRtcLoadFunction = () => {
                 $(".screenWarning").hide();
                 $(".screenControl").show();
 
-                localStorage.setItem("screenControl","passive");
+            } else {
 
-            }else{
+                VoboWebRtc.shareScreen((err) => {
 
-                VoboWebRtc.shareScreen({
-                    video: {
-                        cursor: "always"
-                    },
-                    audio: {
-                        echoCancellation: true,
-                        noiseSuppression: true,
-                        sampleRate: 44100
-                    }
-                },(err)=>{
-
-                    if(err){
-
+                    if (err) {
                         $(".screenControl > .status").removeClass("bgGreen");
                         $(".screenWarning").hide();
                         $(".screenControl").show();
-                        localStorage.setItem("screenControl","passive");
-
-                    }else{
+                    } else {
                         $(".screenControl > .status").addClass("bgGreen");
                         $(".screenWarning").show();
                         $(".screenControl").hide();
-                        localStorage.setItem("screenControl","active");
-
                     }
 
                 });
@@ -512,58 +404,52 @@ let voboWebRtcLoadFunction = () => {
         });
 
 
-        // Ekran yayın props kontrolü
+        // Ekran yayÄ±n props kontrolÃ¼
         VoboWebRtc.on('localScreenStopped', function (video, peer) {
 
             VoboWebRtc.stopScreenShare();
 
             $(".screenWarning").hide();
-            $(".screenControl").show();
 
             $(".screenControl > .status").removeClass("bgGreen");
-
-            localStorage.setItem("screenControl","passive");
-
+            $(".screenControl").show();
 
         });
 
 
-        // Yayın Kapatma
-        $(document).on("click",".buttonLiveOff",function () {
+        // YayÄ±n Kapatma
+        $(document).on("click", ".buttonLiveOff", function () {
 
             swal({
                 title: "UYARI",
-                text: "YAYIN KAPATMA İŞLEMİNİ ONAYLIYOR MUSUNUZ?",
+                text: "YAYIN KAPATMA Ä°ÅLEMÄ°NÄ° ONAYLIYOR MUSUNUZ?",
                 icon: "warning",
                 buttons: {
-                    cancel: "Hayır",
+                    cancel: "HayÄ±r",
                     confirm: "Evet"
                 }
             })
                 .then((willDelete) => {
                     if (willDelete) {
 
+
                         $(".streamStatusButton").addClass("buttonLiveOn");
                         $(".streamStatusButton").removeClass("buttonLiveOff");
-                        $(".streamStatusButton").html("GÖRÜŞMEYE KATIL");
+                        $(".streamStatusButton").html("YAYINI BAÅLAT");
                         $('.timer').countimer("stop");
                         VoboWebRtc.leaveRoom();
-                        $(".welcomeScreenVideo").show();
-                        $(".watcherScreenVideo").hide();
-                        $(".screenControl").hide();
-                        localStorage.setItem("joinRoom",false);
 
                     }
                 });
 
         });
 
-        // Yayın Kapatma
-        $(document).on("click",".cameraItem",function () {
+        // YayÄ±n Kapatma
+        $(document).on("click", ".cameraItem", function () {
 
             VoboWebRtc.stopLocalVideo();
             VoboWebRtc.config.media.video = {
-                optional: [{sourceId: $(this).data("id") }],
+                optional: [{ sourceId: $(this).data("id") }],
                 width: 960,
                 height: 600,
                 frameRate: {
@@ -578,12 +464,11 @@ let voboWebRtcLoadFunction = () => {
 
         });
 
-        // Yayın Kapatma
-        $(document).on("click",".microphoneItem",function () {
+        $(document).on("click", ".microphoneItem", function () {
 
             VoboWebRtc.stopLocalVideo();
             VoboWebRtc.config.media.audio = {
-                optional: [{sourceId: $(this).data("id") }]
+                optional: [{ sourceId: $(this).data("id") }]
             };
             VoboWebRtc.startLocalVideo();
 
@@ -593,84 +478,88 @@ let voboWebRtcLoadFunction = () => {
         });
 
 
-
-        // Yayın Kapatma
-        $(document).on("click",".remoteWatcherCamera",function () {
+        $(document).on("click", ".whiteBoardControl", function () {
 
 
-            if($(this).attr("status") === undefined){
+        });
 
-                $(this).attr("status","active");
 
-                VoboWebRtc.sendDirectlyToAll(window.settings.roomId,"remote", {
+        $(document).on("click", ".remoteWatcherCamera", function () {
+
+
+            if ($(this).attr("status") === undefined) {
+
+                $(this).attr("status", "active");
+
+                VoboWebRtc.sendDirectlyToAll(window.settings.roomId, "remote", {
                     cmd: "camera_active",
                     audience: $(this).data("user")
                 });
 
-                $(this).css("background","#2dda2e");
+                $(this).css("background", "#2dda2e");
 
-            }else if($(this).attr("status") === "active"){
+            } else if ($(this).attr("status") === "active") {
 
-                $(this).attr("status","passive");
+                $(this).attr("status", "passive");
 
-                VoboWebRtc.sendDirectlyToAll(window.settings.roomId,"remote", {
+                VoboWebRtc.sendDirectlyToAll(window.settings.roomId, "remote", {
                     cmd: "camera_passive",
                     audience: $(this).data("user")
                 });
 
-                $(this).css("background","#ff2905");
+                $(this).css("background", "#ff2905");
 
-            }else if($(this).attr("status") === "passive"){
+            } else if ($(this).attr("status") === "passive") {
 
-                $(this).attr("status","active");
+                $(this).attr("status", "active");
 
-                VoboWebRtc.sendDirectlyToAll(window.settings.roomId,"remote", {
+                VoboWebRtc.sendDirectlyToAll(window.settings.roomId, "remote", {
                     cmd: "camera_active",
                     audience: $(this).data("user")
                 });
 
-                $(this).css("background","#2dda2e");
+                $(this).css("background", "#2dda2e");
 
             }
 
         });
 
-        // Yayın Kapatma
-        $(document).on("click",".remoteWatcherMicrophone",function () {
+        // YayÄ±n Kapatma
+        $(document).on("click", ".remoteWatcherMicrophone", function () {
 
 
-            if($(this).attr("status") === undefined){
+            if ($(this).attr("status") === undefined) {
 
-                $(this).attr("status","active");
+                $(this).attr("status", "active");
 
-                VoboWebRtc.sendDirectlyToAll(window.settings.roomId,"remote", {
+                VoboWebRtc.sendDirectlyToAll(window.settings.roomId, "remote", {
                     cmd: "microphone_active",
                     audience: $(this).data("user")
                 });
 
-                $(this).css("background","#2dda2e");
+                $(this).css("background", "#2dda2e");
 
-            }else if($(this).attr("status") === "active"){
+            } else if ($(this).attr("status") === "active") {
 
-                $(this).attr("status","passive");
+                $(this).attr("status", "passive");
 
-                VoboWebRtc.sendDirectlyToAll(window.settings.roomId,"remote", {
+                VoboWebRtc.sendDirectlyToAll(window.settings.roomId, "remote", {
                     cmd: "microphone_passive",
                     audience: $(this).data("user")
                 });
 
-                $(this).css("background","#ff2905");
+                $(this).css("background", "#ff2905");
 
-            }else if($(this).attr("status") === "passive"){
+            } else if ($(this).attr("status") === "passive") {
 
-                $(this).attr("status","active");
+                $(this).attr("status", "active");
 
-                VoboWebRtc.sendDirectlyToAll(window.settings.roomId,"remote", {
+                VoboWebRtc.sendDirectlyToAll(window.settings.roomId, "remote", {
                     cmd: "microphone_active",
                     audience: $(this).data("user")
                 });
 
-                $(this).css("background","#2dda2e");
+                $(this).css("background", "#2dda2e");
 
             }
 
@@ -683,63 +572,50 @@ let voboWebRtcLoadFunction = () => {
     });
 
 
-    $(document).bind("contextmenu",function(ev){
-        if(ev.target.nodeName=='VIDEO') return false;
+    $(document).bind("contextmenu", function (ev) {
+        if (ev.target.nodeName == 'VIDEO') {
+            return false;
+        }
     });
 
 
 };
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
 
     DetectRTC.load(function () {
 
-        if(
+        if (
             (
                 DetectRTC.isRTPSenderReplaceTracksSupported
-                &&  DetectRTC.isScreenCapturingSupported
-                &&  DetectRTC.isSctpDataChannelsSupported
-                &&  DetectRTC.isAudioContextSupported
-                &&  DetectRTC.isWebRTCSupported
-                &&  DetectRTC.isWebSocketsSupported
-                &&  !DetectRTC.isWebSocketsBlocked
-                &&  (DetectRTC.browser.isChrome || DetectRTC.browser.isFirefox)
-                &&  DetectRTC.isVideoSupportsStreamCapturing
+                && DetectRTC.isScreenCapturingSupported
+                && DetectRTC.isSctpDataChannelsSupported
+                && DetectRTC.isAudioContextSupported
+                && DetectRTC.isWebRTCSupported
+                && DetectRTC.isWebSocketsSupported
+                && !DetectRTC.isWebSocketsBlocked
+                && (DetectRTC.browser.isChrome || DetectRTC.browser.isFirefox)
             )
-        ){
+        ) {
 
-            if( DetectRTC.isWebsiteHasWebcamPermissions && DetectRTC.isWebsiteHasMicrophonePermissions){
+            $.ajax({
+                url: "https://beta.vobo.cloud/api/coturn/password",
+                async: false,
+                type: "post",
+                dataType: 'json',
+                success: function (json) {
 
-                $(".appContainerAll").show();
+                    $(".appContainerAll").show();
+                    $(".checkPermission").hide();
 
-                return voboWebRtcLoadFunction();
+                    window.voboWebRtcLoadFunction(json.data.username, json.data.password);
 
-            }else{
+                }
+            });
 
-
-                $(".checkPermission").show();
-
-                $(".getPermission").click(function () {
-
-                    navigator.getUserMedia (window.settings.media,
-                        function() {
-                            $(".appContainerAll").show();
-                            $(".checkPermission").hide();
-                            return voboWebRtcLoadFunction();
-                        },
-                        function(err) {
-                            if(err) {
-                                $(".checkPermission").show();
-
-                            }
-                        }
-                    );
-
-                });
-            }
-
-        }else{
+        } else {
             $(".checkPermission").hide();
             $(".errorDevices").show();
 
