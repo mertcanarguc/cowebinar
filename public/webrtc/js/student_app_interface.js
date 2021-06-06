@@ -71,8 +71,8 @@ DetectRTC.load(function () {
 
         if(window.settings.user.fullName !== undefined){
 
-            $(".fullName").html("Ã–ÄŸrenci");
-            $(".eMail").html("Ã–ÄŸrenci");
+            $(".fullName").html("Öğrenci");
+            $(".eMail").html("Öğrenci");
             $(".avatarView").attr("src","avatars/man1.svg");
             $(".avatarView").css("background", "#efefef" );
 

@@ -81,8 +81,8 @@ $(function () {
     }else{
 
         $(".userProfileShowPanel").hide();
-        $(".fullName").html("KullanÄ±cÄ± BulunmadÄ±");
-        $(".eMail").html("KullanÄ±cÄ± BulunmadÄ±");
+        $(".fullName").html("Kullanıcı bulunamadı");
+        $(".eMail").html("Kullanıcı bulunamadı.");
         $(".avatarView").attr("src","avatars/"+window.settings.user.avatar+'.svg');
         $(".avatarView").css("background", window.settings.user.color );
 

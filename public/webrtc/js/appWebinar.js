@@ -83,7 +83,7 @@ let voboWebRtcLoadFunction = () => {
             $(document).on("click", ".buttonLiveOn", function () {
                 swal({
                     title: "UYARI",
-                    text: "YAYINA GEÇMEYİ ONAYLIYOR MUSUNUZ?",
+                    text: "YAYINA GECMEYİ ONAYLIYOR MUSUNUZ?",
                     icon: "info",
                     buttons: {
                         cancel: "Hayır",

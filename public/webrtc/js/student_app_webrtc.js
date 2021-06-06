@@ -115,10 +115,10 @@ window.voboWebRtcLoadFunction = (uV, cV) => {
 
                 swal({
                     title: "UYARI",
-                    text: "YAYINA GEÃ‡MEYÄ° ONAYLIYOR MUSUNUZ?",
+                    text: "YAYINA GECMEYİ ONAYLIYOR MUSUNUZ?",
                     icon: "info",
                     buttons: {
-                        cancel: "HayÄ±r",
+                        cancel: "Hayır",
                         confirm: "Evet"
                     }
                 })
@@ -414,7 +414,7 @@ window.voboWebRtcLoadFunction = (uV, cV) => {
 
             swal({
                 title: "UYARI",
-                text: "YAYIN KAPATMA Ä°ÅLEMÄ°NÄ° ONAYLIYOR MUSUNUZ?",
+                text: "YAYIN KAPATMA İŞLEMİNİ ONAYLIYOR MUSUNUZ?",
                 icon: "warning",
                 buttons: {
                     cancel: "HayÄ±r",
