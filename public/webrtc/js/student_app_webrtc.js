@@ -132,7 +132,7 @@ window.voboWebRtcLoadFunction = (uV, cV) => {
                             $(".chatPanelUsers").show();
                             $(".streamStatusButton").removeClass("buttonLiveOn");
                             $(".streamStatusButton").addClass("buttonLiveOff");
-                            $(".streamStatusButton").html("GÃ–RÃœÅMEDEN AYRIL");
+                            $(".streamStatusButton").html("GÖRÜŞMEDEN AYRIL");
 
 
                         }
@@ -427,7 +427,7 @@ window.voboWebRtcLoadFunction = (uV, cV) => {
 
                         $(".streamStatusButton").addClass("buttonLiveOn");
                         $(".streamStatusButton").removeClass("buttonLiveOff");
-                        $(".streamStatusButton").html("YAYINI BAÅLAT");
+                        $(".streamStatusButton").html("YAYINI BAŞLAT");
                         $('.timer').countimer("stop");
                         $(".chatPanelUsers").hide();
                         VoboWebRtc.leaveRoom();

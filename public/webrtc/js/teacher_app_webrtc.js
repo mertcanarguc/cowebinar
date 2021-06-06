@@ -435,7 +435,7 @@ window.voboWebRtcLoadFunction = (uV, cV) => {
 
                         $(".streamStatusButton").addClass("buttonLiveOn");
                         $(".streamStatusButton").removeClass("buttonLiveOff");
-                        $(".streamStatusButton").html("YAYINI BAÅLAT");
+                        $(".streamStatusButton").html("YAYINI BAŞLAT");
                         $('.timer').countimer("stop");
                         VoboWebRtc.leaveRoom();
 
