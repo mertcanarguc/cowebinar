@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WEBINAR</title>
+    <link rel="stylesheet" href="webrtc/css/app.css">
+    <link rel="stylesheet" href="webrtc/css/animate.min.css">
+</head>
+
+<body>
+    <div class="appContainerAll" style="display: none;">
+        <div class="managementPanel ">
+            <div class="logo">
+                <img src="webrtc/svg/vobolive.svg" class="animate__fadeInLeft animate__animated" width="100px" alt="">
+            </div>
+            <div class="user">
+                <div class="avatarUser animate__animated animate__bounceIn"><img src="" height="53px"
+                        class="avatarView " alt=""> </div>
+                <div class="information ">
+                    <div class="fullName fullNameViewZz"></div>
+                    <div class="eMail eMailViewZz"></div>
+                </div>
+            </div>
+            <div class="teacherScreen">
+                <div class="screenWarning">
+                    <div class="screenShareWarning animate__infinite animate__pulse animate__animated">
+                        <span> <img src="webrtc/svg/desktop.svg" height="25px" alt=""> </span>
+                        <span>Şuan Ekran yayını yapmaktasınız.</span>
+                    </div>
+                </div>
+                <video class="streamer_camera" id="videoContainer" width="100%" playsinline></video>
+            </div>
+            <div class="buttons">
+                <div class="button cameraControl" data-button data-operation="camera" data-status="active">
+                    <div class="status animate__animated animate__bounceIn"></div>
+                    <div class="title">KAMERA</div>
+                </div>
+                <div class="button microphoneControl" data-button data-operation="microphone" data-status="active">
+                    <div class="status animate__animated animate__bounceIn"></div>
+                    <div class="title">MİKROFON</div>
+                </div>
+                <div class="button screenControl" data-button data-operation="screen" data-status="active">
+                    <div class="status animate__animated animate__bounceIn"></div>
+                    <div class="title">EKRAN PAYLAŞIMI</div>
+                </div>
+                <!--
+            <div class="button chatControl" data-button data-operation="chat" data-status="active">
+                <div class="status animate__animated animate__bounceIn"></div>
+                <div class="title">SOHBET</div>
+            </div>
+            -->
+                <div class="buttonLiveOn streamStatusButton">
+                    <div class="title">GÖRÜŞMEYİ BAŞLAT</div>
+                </div>
+                <div class="buttonSettings settingsButton">
+                    <div class="title">AYARLAR</div>
+                </div>
+            </div>
+        </div>
+        <div class="players">
+            <div class="scoreBoard">
+                <div class="toggleFullScreenLogo">
+                    <img src="webrtc/svg/vobolive.svg" class="animate__fadeInLeft animate__animated" width="60px"
+                        alt="">
+                </div>
+                <div class="toggleFullScreen"><img src="webrtc/svg/fullscreen.svg" alt=""> </div>
+                <div class="status">YAYINCI</div>
+                <div class="watcher">İZLEYİCİ : <span class="viewerCounter">0</span> </div>
+                <div class="timer">00:00:00</div>
+            </div>
+            <div class="videoContainer">
+            </div>
+        </div>
+        <div class="audience">
+            <div class="operationTab">
+                <div data-id="audience" class="tabItem">KATILIMCILAR</div>
+                <div data-id="chat" class="tabItem">SOHBET</div>
+            </div>
+            <div id="audience" style="display: block;" class="audienceBgWhite audienceListDiv tabContent"> </div>
+            <div id="chat" class="tabContent" style="display: none;">
+                <div class="chatHisory"></div>
+                <div class="chatBox">
+                    <textarea class="chatBoxInnner" placeholder="Bir mesaj yazın..."></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="popupSettingsStatus">
+            <div class="popupSettings">
+                <div class="containerPopup">
+                    <div class="popupClose"></div>
+                    <div class="operationTabSetting">
+                        <div data-id="accessesSettings" class="tabItemSettings tabActive">KAMERA & SES AYARLARI</div>
+                        <div data-id="browserSettings" class="tabItemSettings">KULLANICI AYARLARI</div>
+                    </div>
+                    <div id="accessesSettings" class="tabContentSettings">
+                        <div class="cameraSettings"></div>
+                        <div class="microphoneSettings"></div>
+                    </div>
+                    <div id="browserSettings" class="tabContentSettings" style="display: none;">
+                        <div class="frameOn">
+                            <div class="FrameTitle">Yayıncı</div>
+                            <div class="content">
+                                <input type="text" placeholder="İsim SOYİSİM" name="fullName" class="fullNameInput">
+                                <input type="text" placeholder="mail@vobo.live" name="fullName" class="eMailInput">
+                            </div>
+                        </div>
+                        <div class="frameOn">
+                            <div class="FrameTitle">Avatar</div>
+                            <div class="content">
+                                <div class="avatar avatarActive" data-avatar="man1"><img src="avatars/man1.svg"
+                                        height="50px;" alt=""> </div>
+                                <div class="avatar " data-avatar="man2"><img src="avatars/man2.svg" height="50px;"
+                                        alt=""> </div>
+                                <div class="avatar " data-avatar="man3"><img src="avatars/man3.svg" height="50px;"
+                                        alt=""> </div>
+                                <div class="avatar " data-avatar="woman1"><img src="avatars/woman1.svg" height="50px;"
+                                        alt=""> </div>
+                                <div class="avatar " data-avatar="woman2"><img src="avatars/woman2.svg" height="50px;"
+                                        alt=""> </div>
+                                <div class="avatar " data-avatar="woman3"><img src="avatars/woman3.svg" height="50px;"
+                                        alt=""> </div>
+                            </div>
+                        </div>
+                        <div class="frameOn">
+                            <div class="FrameTitle">Renk</div>
+                            <div class="content">
+                                <div class="color colorActive" data-color="f44336" style="background-color: #f44336">
+                                </div>
+                                <div class="color " data-color="9c27b0" style="background-color: #9c27b0"></div>
+                                <div class="color " data-color="673ab7" style="background-color: #673ab7"></div>
+                                <div class="color " data-color="3f51b5" style="background-color: #3f51b5"></div>
+                                <div class="color " data-color="01a9f4" style="background-color: #01a9f4"></div>
+                                <div class="color " data-color="019688" style="background-color: #019688"></div>
+                                <div class="color " data-color="4caf50" style="background-color: #4caf50"></div>
+                                <div class="color " data-color="ffc124" style="background-color: #ffc124"></div>
+                                <div class="color " data-color="ff981a" style="background-color: #ff981a"></div>
+                                <div class="color " data-color="ff5722" style="background-color: #ff5722"></div>
+                                <div class="color " data-color="795648" style="background-color: #795648;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="stepOne checkPermission" style="display: none;">
+        <img src="webrtc/svg/vobolive.svg" class="animate__fadeInLeft animate__animated logoFullScreen" width="100px"
+            alt="">
+        <div class="stepContent">
+            <div class="titleStep">ERİŞİM İZNİ</div>
+            <div class="descriptionStep">Görüşmeye katılmak için Kamera ve Mikrofon izinlerinin verilmesi gerekmektedir.
+            </div>
+            <div class="agreementStep">Bu hizmeti kullanarak <a href="#">Hizmet Şartlarımızı</a> kabul ediyor ve 16
+                yaşından büyük olduğunuzu onaylıyorsunuz.</div>
+            <div class="buttonStep getPermission">Devam et</div>
+
+        </div>
+    </div>
+    <div class="stepOne errorDevices" style="display: none;">
+        <img src="webrtc/svg/vobolive.svg" class="animate__fadeInLeft animate__animated logoFullScreen" width="100px"
+            alt="">
+        <div class="stepContent">
+            <div class="titleStep">ERİŞİM HATASI</div>
+            <div class="descriptionStep">Cihazınız yazılımı desteklememktedir.</div>
+            <div class="errorStep"> <strong>Öneriler </strong> : <br> <br> Chrome Tarayıcısı Kullanınız. <br> Kamera ve
+                Mikrofon Cihazlarınızın doğru çalıştığından emin olunuz. <br> İnternet bağlantınızın sorunsuz
+                çalıştığından emin olunuz.</div>
+
+        </div>
+    </div>
+    <script type="application/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
+    <script type="application/javascript" src="webrtc/js/VoboWebRTC.js"></script>
+    <script type="application/javascript" src="webrtc/js/DetectRTC.js"></script>
+    <script>
+
+        DetectRTC.load(function () {
+
+            if (localStorage.getItem("cameraControl") == null) {
+                localStorage.setItem("cameraControl", "active");
+            }
+
+            if (localStorage.getItem("microphoneControl") == null) {
+                localStorage.setItem("microphoneControl", "active");
+            }
+
+            if (localStorage.getItem("chatControl") == null) {
+                localStorage.setItem("chatControl", "passive");
+            }
+
+            window.settings = {
+                broadcaster: true,
+                roomId: localStorage.getItem("roomId") !== null ? localStorage.getItem("roomId") : "1234",
+                userId: localStorage.getItem("userId") !== null ? localStorage.getItem("userId") : chance.guid(),
+                debug: false,
+                autoRequestMedia: true,
+                enableDataChannels: true,
+                receiveMedia: {
+                    offerToReceiveVideo: true,
+                    offerToReceiveAudio: true,
+                },
+                user: {
+                    fullName: localStorage.getItem("fullName") !== null ? localStorage.getItem("fullName") : chance.name(),
+                    eMail: localStorage.getItem("eMail") !== null ? localStorage.getItem("eMail") : chance.email(),
+                    color: localStorage.getItem("color") !== null ? '#' + localStorage.getItem("color") : "f44336",
+                    avatar: localStorage.getItem("avatar") !== null ? localStorage.getItem("avatar") : "man1",
+                    editable: false
+                },
+                media: {
+                    video: DetectRTC.videoInputDevices.length > 0,
+                    audio: DetectRTC.audioInputDevices.length > 0,
+                    screen: localStorage.getItem("screenControl") === "active",
+                    chat: localStorage.getItem("chatControl") === "active"
+                },
+                server: {
+                    signal: "https://talksignal.herokuapp.com",
+                    dashboard: "",
+                    // api:"https://vobolive.herokuapp.com/",
+                    app: ""
+                },
+                ice: {
+                    "iceServers": [{
+                        urls: [
+                            "stun:stun.l.google.com:19302",
+                            "stun:stun1.l.google.com:19302"
+                        ]
+                    }, {
+                        username: "euwF3pSnxG82BZbh-v_v-HA0AI64dU11pI8G7sEqA-OUxlA_rMmTFkvwY-gqD5LEAAAAAGCqD_VtZXJ0Y2FuYXJndWM=",
+                        credential: "877aab96-bb9f-11eb-9e93-0242ac140004",
+                        urls: [
+                            // "turn:turn.wegitim.com:3478?transport=udp",
+                            // "turn:turn.wegitim.com:3478?transport=tcp",
+                            // "turn:turn.wegitim.com:80?transport=tcp",
+                            // "turn:turn.wegitim.com:80?transport=udp",
+                            "turn:eu-turn1.xirsys.com:80?transport=udp",
+                            "turn:eu-turn1.xirsys.com:3478?transport=udp",
+                            "turn:eu-turn1.xirsys.com:80?transport=tcp",
+                            "turn:eu-turn1.xirsys.com:3478?transport=tcp",
+                            "turns:eu-turn1.xirsys.com:443?transport=tcp",
+                            "turns:eu-turn1.xirsys.com:5349?transport=tcp"
+                        ]
+                    }]
+                }
+            };
+
+        });
+
+    </script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="application/javascript" src="webrtc/js/appLibs.js"></script>
+    <script type="application/javascript" src="webrtc/js/xss.js"></script>
+    <script type="application/javascript" src="webrtc/js/ez.countimer.js"></script>
+    <script type="application/javascript" src="webrtc/js/moment.min.js"></script>
+    <script type="application/javascript" src="webrtc/js/jquery.fullscreen-min.js"></script>
+    <script type="application/javascript" src="webrtc/js/teacher_app_interface.js"></script>
+    <script type="application/javascript" src="webrtc/js/teacher_app_webrtc.js"></script>
+
+
+
+
+</body>
+
+</html>

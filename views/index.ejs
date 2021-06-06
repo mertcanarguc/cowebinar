@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WEBINAR</title>
+    <link rel="stylesheet" href="webrtc/css/appWhereby.css">
+    <link rel="stylesheet" href="webrtc/css/animate.min.css">
+</head>
+
+<body>
+    <div class="appContainerAll" style="display: none;">
+        <div class="managementPanel ">
+            <div class="logo">
+                <img src="vobolive.svg" class="animate__fadeInLeft animate__animated" width="100px" alt="">
+            </div>
+            <div class="byOwner">
+                <div class="user">
+                    <div class="avatarUser animate__animated animate__bounceIn"><img src="img/" height="53px"
+                            class="avatarView " alt=""> </div>
+                    <div class="information ">
+                        <div class="fullName fullNameViewZzz"></div>
+                        <div class="eMail eMailViewZzz"></div>
+                    </div>
+                </div>
+                <div class="screenWarning">
+                    <div class="screenShareWarning animate__infinite animate__pulse animate__animated">
+                        <span> <img src="img/desktop.svg" height="25px" alt=""> </span>
+                        <span>Şuan Ekran yayını yapmaktasınız.</span>
+                    </div>
+                </div>
+                <video class="streamer_camera" id="videoContainer" playsinline></video>
+
+            </div>
+
+            <div class="buttons">
+
+                <div class="button cameraControl" data-button data-operation="camera" data-status="active">
+                    <div class="status animate__animated animate__bounceIn"></div>
+                    <div class="title">KAMERA</div>
+                </div>
+
+                <div class="button microphoneControl" data-button data-operation="microphone" data-status="active">
+                    <div class="status animate__animated animate__bounceIn"></div>
+                    <div class="title">MİKROFON</div>
+                </div>
+
+                <div class="button screenControl" style="display: none;" data-button data-operation="screen"
+                    data-status="active">
+                    <div class="status animate__animated animate__bounceIn"></div>
+                    <div class="title">EKRAN PAYLAŞIMI</div>
+                </div>
+
+                <div class="buttonLiveOn streamStatusButton">
+                    <div class="title">GÖRÜŞMEYE KATIL</div>
+                </div>
+
+                <div class="buttonSettings settingsButton">
+                    <div class="title">AYARLAR</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="players">
+
+            <div class="scoreBoard">
+
+                <div class="toggleFullScreenLogo">
+                    <img src="vobolive.svg" class="animate__fadeInLeft animate__animated" width="60px" alt="">
+                </div>
+                <div class="toggleFullScreen"><img src="img/fullscreen.svg" alt=""> </div>
+                <div class="status">YAYINCI</div>
+                <div class="watcher">İZLEYİCİ : <span class="viewerCounter">0</span> </div>
+                <div class="timer">00:00:00</div>
+
+            </div>
+
+            <div class="videoContainer">
+
+                <div class="watcherScreenVideo" style="display: none">
+
+                    <img src="logo1_1.svg" width="200px" alt="">
+
+                    <div class="title">GÖRÜŞMEYE KATILIMCI BEKLENİYOR</div>
+                </div>
+
+                <div class="welcomeScreenVideo">
+
+                    <img src="logo1_1.svg" width="200px" alt="">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="popupSettingsStatus">
+            <div class="popupSettings">
+                <div class="containerPopup">
+
+                    <div class="popupClose"></div>
+
+
+                    <div class="operationTabSetting">
+                        <div data-id="accessesSettings" class="tabItemSettings tabActive">KAMERA & SES AYARLARI</div>
+                        <div data-id="browserSettings" class="tabItemSettings">KULLANICI AYARLARI</div>
+                    </div>
+
+                    <div id="accessesSettings" class="tabContentSettings">
+                        <div class="cameraSettings"></div>
+                        <div class="microphoneSettings"></div>
+                    </div>
+
+
+                    <div id="browserSettings" class="tabContentSettings" style="display: none;">
+
+                        <div class="frameOn">
+                            <div class="FrameTitle">Yayıncı</div>
+                            <div class="content">
+
+                                <input type="text" placeholder="İsim SOYİSİM" name="fullName" class="fullNameInput">
+                                <input type="text" placeholder="mail@vobo.live" name="fullName" class="eMailInput">
+
+                            </div>
+                        </div>
+
+                        <div class="frameOn">
+                            <div class="FrameTitle">Avatar</div>
+                            <div class="content">
+                                <div class="avatar avatarActive" data-avatar="man1"><img src="webrtc/svg/man1.svg"
+                                        height="50px;" alt=""> </div>
+                                <div class="avatar " data-avatar="man2"><img src="webrtc/svg/man2.svg" height="50px;"
+                                        alt=""> </div>
+                                <div class="avatar " data-avatar="man3"><img src="webrtc/svg/man3.svg" height="50px;"
+                                        alt=""> </div>
+                                <div class="avatar " data-avatar="woman1"><img src="webrtc/svg/woman1.svg"
+                                        height="50px;" alt=""> </div>
+                                <div class="avatar " data-avatar="woman2"><img src="webrtc/svg/woman2.svg"
+                                        height="50px;" alt=""> </div>
+                                <div class="avatar " data-avatar="woman3"><img src="webrtc/svg/woman3.svg"
+                                        height="50px;" alt=""> </div>
+                            </div>
+                        </div>
+
+
+                        <div class="frameOn">
+                            <div class="FrameTitle">Renk</div>
+                            <div class="content">
+                                <div class="color colorActive" data-color="f44336" style="background-color: #f44336">
+                                </div>
+                                <div class="color " data-color="9c27b0" style="background-color: #9c27b0"></div>
+                                <div class="color " data-color="673ab7" style="background-color: #673ab7"></div>
+                                <div class="color " data-color="3f51b5" style="background-color: #3f51b5"></div>
+                                <div class="color " data-color="01a9f4" style="background-color: #01a9f4"></div>
+                                <div class="color " data-color="019688" style="background-color: #019688"></div>
+                                <div class="color " data-color="4caf50" style="background-color: #4caf50"></div>
+                                <div class="color " data-color="ffc124" style="background-color: #ffc124"></div>
+                                <div class="color " data-color="ff981a" style="background-color: #ff981a"></div>
+                                <div class="color " data-color="ff5722" style="background-color: #ff5722"></div>
+                                <div class="color " data-color="795648" style="background-color: #795648;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="stepOne checkPermission" style="display: none;">
+        <img src="img/vobolive.svg" class="animate__fadeInLeft animate__animated logoFullScreen" width="100px" alt="">
+        <div class="stepContent">
+            <div class="titleStep">ERİŞİM İZNİ</div>
+            <div class="descriptionStep">Görüşmeye katılmak için Kamera ve Mikrofon izinlerinin verilmesi gerekmektedir.
+            </div>
+            <div class="agreementStep">Bu hizmeti kullanarak <a href="#">Hizmet Şartlarımızı</a> kabul ediyor ve 16
+                yaşından büyük olduğunuzu onaylıyorsunuz.</div>
+            <div class="buttonStep getPermission">Devam et</div>
+
+        </div>
+    </div>
+
+
+    <div class="stepOne errorDevices" style="display: none;">
+        <img src="vobolive.svg" class="animate__fadeInLeft animate__animated logoFullScreen" width="100px" alt="">
+        <div class="stepContent">
+            <div class="titleStep">ERİŞİM HATASI</div>
+            <div class="descriptionStep">Cihazınız yazılımı desteklememktedir.</div>
+            <div class="errorStep"> <strong>Öneriler </strong> : <br> <br> Chrome Tarayıcısı Kullanınız. <br> Kamera ve
+                Mikrofon Cihazlarınızın doğru çalıştığından emin olunuz. <br> İnternet bağlantınızın sorunsuz
+                çalıştığından emin olunuz.</div>
+
+        </div>
+    </div>
+
+    <script type="application/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="application/javascript" src="webrtc/js/DetectRTC.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.13/chance.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
+
+
+    <script>
+
+        DetectRTC.load(function () {
+
+            if (localStorage.getItem("fullName") == null) {
+                localStorage.setItem("fullName", chance.name());
+            }
+            if (localStorage.getItem("eMail") == null) {
+                localStorage.setItem("eMail", chance.email());
+            }
+            if (localStorage.getItem("avatar") == null) {
+                localStorage.setItem("avatar", "man1");
+            }
+            if (localStorage.getItem("color") == null) {
+                localStorage.setItem("color", "f44336");
+            }
+            if (localStorage.getItem("roomId") == null) {
+                localStorage.setItem("roomId", "1234");
+            }
+            if (localStorage.getItem("userId") == null) {
+                localStorage.setItem("userId", chance.guid());
+            }
+
+            localStorage.setItem("joinRoom", false);
+
+            if (localStorage.getItem("cameraControl") == null) {
+                localStorage.setItem("cameraControl", "active");
+            }
+
+            if (localStorage.getItem("microphoneControl") == null) {
+                localStorage.setItem("microphoneControl", "active");
+            }
+
+            if (localStorage.getItem("chatControl") == null) {
+                localStorage.setItem("chatControl", "passive");
+            }
+
+            if (localStorage.getItem("screenControl") == null) {
+                localStorage.setItem("screenControl", "passive");
+            }
+
+            window.settings = {
+                broadcaster: true,
+                roomId: "1886",
+                userId: localStorage.getItem("userId"),
+                debug: false,
+                autoRequestMedia: true,
+                enableDataChannels: true,
+                user: {
+                    fullName: localStorage.getItem("fullName"),
+                    eMail: localStorage.getItem("eMail"),
+                    color: localStorage.getItem("color"),
+                    avatar: localStorage.getItem("avatar"),
+                    editable: true
+                },
+                media: {
+                    video: DetectRTC.videoInputDevices.length > 0,
+                    audio: DetectRTC.audioInputDevices.length > 0,
+                    screen: localStorage.getItem("screenControl") === "active",
+                    chat: localStorage.getItem("chatControl") === "active"
+                },
+                server: {
+                    // signal: "localhost:3001",
+                    signal: "https://soruvecozum.com",
+                    dashboard: "",
+                    app: ""
+                },
+                ice: {
+                    iceServers: [{
+                        urls: [
+                            "stun:stun.l.google.com:19302",
+                            "stun:stun1.l.google.com:19302"
+                        ]
+                    }, {
+                        username: "euwF3pSnxG82BZbh-v_v-HA0AI64dU11pI8G7sEqA-OUxlA_rMmTFkvwY-gqD5LEAAAAAGCqD_VtZXJ0Y2FuYXJndWM=",
+                        credential: "877aab96-bb9f-11eb-9e93-0242ac140004",
+                        urls: [
+                            "turn:eu-turn1.xirsys.com:80?transport=udp",
+                            "turn:eu-turn1.xirsys.com:3478?transport=udp",
+                            "turn:eu-turn1.xirsys.com:80?transport=tcp",
+                            "turn:eu-turn1.xirsys.com:3478?transport=tcp",
+                            "turns:eu-turn1.xirsys.com:443?transport=tcp",
+                            "turns:eu-turn1.xirsys.com:5349?transport=tcp"
+                        ]
+                    }]
+                },
+            };
+
+        });
+
+    </script>
+    <script type="application/javascript" src="webrtc/js/VoboWebRTC.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="application/javascript" src="webrtc/js/appLibs.js"></script>
+    <script type="application/javascript" src="webrtc/js/xss.js"></script>
+    <script type="application/javascript" src="webrtc/js/ez.countimer.js"></script>
+    <script type="application/javascript" src="webrtc/js/moment.min.js"></script>
+    <script type="application/javascript" src="webrtc/js/jquery.fullscreen-min.js"></script>
+    <script type="application/javascript" src="webrtc/js/group_app_interface.js"></script>
+    <script type="application/javascript" src="webrtc/js/group_app_webrtc.js"></script>
+</body>
+
+</html>
